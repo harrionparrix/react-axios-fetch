@@ -1,11 +1,17 @@
 import './App.css';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import Axios from 'axios'; 
 
 function App() {
-
+  const [method, setmethod] = useState("");
   const [facto, setfacto] = useState("");
   const [factos, setfactos] = useState("");
+  useEffect(() => {
+   setmethod('You clicked on get facts using axios');
+  },[facto]);
+  useEffect(() => {
+  setmethod('You clicked on get facts using fetch');
+},[factos]);
   const getAnything=()=>{
     Axios.get('https://catfact.ninja/fact').then(
       (response) => {
@@ -37,6 +43,9 @@ fetch("https://catfact.ninja/fact").then(
     <h2>
       {factos}
     </h2>
+    <h1>
+      {method}
+    </h1>
     </>
   );
 }
