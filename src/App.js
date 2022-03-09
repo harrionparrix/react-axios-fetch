@@ -4,18 +4,28 @@ import Axios from 'axios';
 
 function App() {
   const [method, setmethod] = useState("");
+  const [isUpdate, setIsUpdate] = useState(false);
   const [facto, setfacto] = useState("");
   const [factos, setfactos] = useState("");
+  const[display,setdisplay]=useState(false);
+
   useEffect(() => {
-   setmethod('You clicked on get facts using axios');
+    setIsUpdate(true); 
+    if(isUpdate)
+    {
+   setmethod('You clicked on get facts using axios');}
   },[facto]);
+  
   useEffect(() => {
-  setmethod('You clicked on get facts using fetch');
+    setIsUpdate(true);
+    if(isUpdate)
+    {
+  setmethod('You clicked on get facts using fetch');}
 },[factos]);
   const getAnything=()=>{
     Axios.get('https://catfact.ninja/fact').then(
       (response) => {
-      setfacto(response.data.fact);
+          setfacto(response.data.fact);     
   }
     );
 };
@@ -23,7 +33,8 @@ const getAnother=()=>{
 fetch("https://catfact.ninja/fact").then(
 (response)=>response.json()).then(
   (data)=>{
-    setfactos(data.fact);
+      setfactos(data.fact);
+    
   }
 )
 };
@@ -32,13 +43,19 @@ fetch("https://catfact.ninja/fact").then(
     <h1>
       Welcome to CatFacts</h1>
       <br/>
-      <button onClick={getAnything}>Click on Me for a fact using axios</button>
+      <button onClick={()=>{
+          getAnything()
+          setdisplay(true);
+      }}>Click on Me for a fact using axios</button>
     
     <h2>
       {facto}
     </h2>
     <br/>
-      <button onClick={getAnother}>Click on Me for a fact using FETCH</button>
+    <button onClick={()=>{
+          getAnother()
+          setdisplay(true);
+      }}>Click on Me for a fact using FETCH</button>
   
     <h2>
       {factos}
